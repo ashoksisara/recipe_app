@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/common/app/app_snackbar.dart';
 import 'package:recipe_app/model/recipe_model.dart';
@@ -15,6 +18,7 @@ class RecipeProvider extends ChangeNotifier {
   final TextEditingController servingController = TextEditingController();
   final TextEditingController prepTimeController = TextEditingController();
   final TextEditingController cookingTimeController = TextEditingController();
+  XFile? recipeImage;
 
   List<IngredientModel> ingredientList = [];
   List<StepModel> stepList = [];
@@ -38,6 +42,11 @@ class RecipeProvider extends ChangeNotifier {
 
   void removeIngredient(IngredientModel ingredient) {
     ingredientList.remove(ingredient);
+    notifyListeners();
+  }
+
+  void setRecipeImage(XFile? file){
+    recipeImage = file;
     notifyListeners();
   }
 
@@ -66,6 +75,13 @@ class RecipeProvider extends ChangeNotifier {
           cookingTime: cookingTimeController.text.trim(),
           ingredientList: ingredientList,
           stepList: stepList);
+      if(recipeImage != null){
+        String? url = await FirebaseService.uploadImage(File(recipeImage!.path),recipeImage!.name);
+        print('url -> $url');
+        if(url != null){
+          recipe.recipePhotoUrl = url;
+        }
+      }
       debugPrint('recipe tojson -> ${recipe.toJson()}');
       debugPrint('recipe ingre -> ${recipe.ingredientList}');
       FirebaseService.addRecipe(recipe).then((value) {
@@ -97,5 +113,6 @@ class RecipeProvider extends ChangeNotifier {
     cookingTimeController.clear();
     ingredientList.clear();
     stepList.clear();
+    recipeImage = null;
   }
 }

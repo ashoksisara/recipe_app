@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/widgets/app_image_placeholder.dart';
 import '../../providers/recipe_provider.dart';
 import 'recipe_info.dart';
 
@@ -44,25 +45,21 @@ class _RecipeListState extends State<RecipeList> {
                 },
                 child: ListTile(
                   leading: recipe.recipePhotoUrl.isNotEmpty
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Image.network(recipe.recipePhotoUrl),
-                          ))
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: 50,
-                            color: Colors.blue,
-                            child: const Text('No image',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 10),
-                                maxLines: 2,
-                                textAlign: TextAlign.center),
+                      ? SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              recipe.recipePhotoUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const AppImagePlaceHolder();
+                              },
+                            ),
                           ),
-                        ),
+                        )
+                      : const AppImagePlaceHolder(),
                   title: Text(recipe.recipeName),
                   subtitle: Text(recipe.recipeDescription),
                   trailing: const Icon(Icons.chevron_right),

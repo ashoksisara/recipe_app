@@ -30,9 +30,26 @@ class _RecipeDescriptionState extends State<RecipeDescription> {
             InkWell(
                 onTap: (){
                   FocusScope.of(context).unfocus();
-                  AppBottomSheet.showImageSelectionSheet(context);
+                  AppBottomSheet.showImageSelectionSheet(context,
+                      onCamera: (file) {
+                        debugPrint('file ---> ${file?.name}');
+                        recipeProvider.setRecipeImage(file);
+                        Navigator.of(context).pop();
+                      }, onGallery: (file) {
+                        debugPrint('file ---> ${file?.name}');
+                        recipeProvider.setRecipeImage(file);
+                        Navigator.of(context).pop();
+                      });
                 },
-                child : const AppImageSelection()),
+              child: Consumer<RecipeProvider>(
+                builder: (context, provider, chile) {
+                  return AppImageSelection(
+                    file: provider.recipeImage,
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20,),
             const Text('Recipe Name'),
             AppTextFormField(
                 controller: recipeProvider.recipeNameController,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/model/recipe_model.dart';
 
+import '../../common/widgets/app_image_placeholder.dart';
+
 class RecipeInfo extends StatelessWidget {
   final RecipeModel recipe;
 
@@ -32,9 +34,21 @@ class RecipeInfo extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.blue),
                     child: recipe.recipePhotoUrl.isNotEmpty
-                        ? Image.network(recipe.recipePhotoUrl)
-                        : const Text('No image',
-                            style: TextStyle(color: Colors.white)),
+                        ? SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                recipe.recipePhotoUrl,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const AppImagePlaceHolder();
+                                },
+                              ),
+                            ),
+                          )
+                        : const AppImagePlaceHolder(),
                   ),
                   const SizedBox(
                     width: 20,

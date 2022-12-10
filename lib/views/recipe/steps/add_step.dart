@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_app/common/widgets/app_image_selection.dart';
 import 'package:recipe_app/providers/recipe_provider.dart';
 
+import '../../../common/app/app_bottom_sheet.dart';
 import '../../../common/app/validation.dart';
 import '../../../common/widgets/app_elevated_button.dart';
 import '../../../common/widgets/app_text_form_field.dart';
@@ -20,7 +21,7 @@ class AddStep extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Add ingredient',
+          'Add step',
         ),
         centerTitle: true,
       ),
@@ -31,7 +32,19 @@ class AddStep extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AppImageSelection(),
+              // InkWell(
+              //   onTap: (){
+              //     FocusScope.of(context).unfocus();
+              //     AppBottomSheet.showImageSelectionSheet(context,
+              //         onCamera: (file) {
+              //           debugPrint('file ---> ${file?.name}');
+              //           Navigator.of(context).pop();
+              //         }, onGallery: (file) {
+              //           debugPrint('file ---> ${file?.name}');
+              //           Navigator.of(context).pop();
+              //         });
+              //   },
+              //   child : AppImageSelection(file: recipeProvider.recipeImage,),),
               const SizedBox(
                 height: 20,
               ),

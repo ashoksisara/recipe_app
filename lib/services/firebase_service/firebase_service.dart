@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/model/recipe_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -41,6 +44,21 @@ class FirebaseService {
       }
     }
     return null;
+  }
+
+  static Future<String?> uploadImage(File file,String fileName) async {
+    try{
+      final storageRef = FirebaseStorage.instance.ref();
+      String fName = fileName + DateTime.now().millisecondsSinceEpoch.toString();
+      Reference ref = storageRef.child("recipe_images/$fName");
+      UploadTask uploadTask = ref.putFile(file);
+      var downloadUrl = await (await uploadTask).ref.getDownloadURL();
+      String url = downloadUrl.toString();
+      return url;
+    }catch(e){
+      print('error while uploading file $e');
+      return null;
+    }
   }
 
   static Future<void> addRecipe(RecipeModel recipeModel) async {
