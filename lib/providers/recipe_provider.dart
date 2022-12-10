@@ -24,6 +24,8 @@ class RecipeProvider extends ChangeNotifier {
   List<StepModel> stepList = [];
   List<RecipeModel> recipeList = [];
   bool isLoading = false;
+  bool reorderIngredient = false;
+  bool reorderStep = false;
 
   void addIngredient(IngredientModel ingredient) {
     ingredientList.add(ingredient);
@@ -54,6 +56,35 @@ class RecipeProvider extends ChangeNotifier {
     step.image = file;
     notifyListeners();
   }
+
+  void updateIngredientReorder(){
+    reorderIngredient = !reorderIngredient;
+    notifyListeners();
+  }
+
+  void reorderIngredientData(oldIndex, newIndex){
+      if (oldIndex < newIndex){
+        newIndex--;
+      }
+      final item = ingredientList.removeAt(oldIndex);
+      ingredientList.insert(newIndex, item);
+    notifyListeners();
+  }
+
+  void updateStepReorder(){
+    reorderStep = !reorderStep;
+    notifyListeners();
+  }
+
+  void reorderStepListData(oldIndex, newIndex){
+    if (oldIndex < newIndex){
+      newIndex--;
+    }
+    final item = stepList.removeAt(oldIndex);
+    stepList.insert(newIndex, item);
+    notifyListeners();
+  }
+
 
   Future<void> onSaveRecipe(BuildContext context) async {
     if (recipeNameController.text.isEmpty) {

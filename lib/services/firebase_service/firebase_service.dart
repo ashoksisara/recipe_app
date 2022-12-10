@@ -57,6 +57,10 @@ class FirebaseService {
     return null;
   }
 
+  static Future<void> signOutUser() async{
+    await FirebaseAuth.instance.signOut();
+  }
+
   static Future<String?> uploadImage(File file,String fileName) async {
     try{
       final storageRef = FirebaseStorage.instance.ref();

@@ -52,4 +52,8 @@ class AuthenticationProvider extends ChangeNotifier {
       }
     });
   }
+
+  Future<void> signOutUser() async {
+    await FirebaseService.signOutUser();
+  }
 }

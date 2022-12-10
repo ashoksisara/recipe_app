@@ -6,14 +6,14 @@ import '../../common/widgets/app_image_placeholder.dart';
 import '../../providers/recipe_provider.dart';
 import 'recipe_info.dart';
 
-class RecipeList extends StatefulWidget {
-  const RecipeList({Key? key}) : super(key: key);
+class RecipeListScreen extends StatefulWidget {
+  const RecipeListScreen({Key? key}) : super(key: key);
 
   @override
-  State<RecipeList> createState() => _RecipeListState();
+  State<RecipeListScreen> createState() => _RecipeListScreenState();
 }
 
-class _RecipeListState extends State<RecipeList> {
+class _RecipeListScreenState extends State<RecipeListScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -33,9 +33,7 @@ class _RecipeListState extends State<RecipeList> {
         title: const Text('Recipe List'),
       ),
       body: Consumer<RecipeProvider>(builder: (context, provider, _) {
-        if (provider.isLoading) {
-          return const AppLoader();
-        } else if (provider.recipeList.isNotEmpty) {
+         if (provider.recipeList.isNotEmpty) {
           return ListView.separated(
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
@@ -67,8 +65,8 @@ class _RecipeListState extends State<RecipeList> {
                           ),
                         )
                       : const AppImagePlaceHolder(),
-                  title: Text(recipe.recipeName),
-                  subtitle: Text(recipe.recipeDescription),
+                  title: Text(recipe.recipeName,maxLines: 1, overflow: TextOverflow.ellipsis),
+                  subtitle: Text(recipe.recipeDescription,maxLines: 1, overflow: TextOverflow.ellipsis),
                   trailing: const Icon(Icons.chevron_right),
                 ),
               );

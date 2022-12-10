@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:recipe_app/providers/home_provider.dart';
 import 'package:recipe_app/views/recipe/create_recipe_screen.dart';
 
-import 'views/recipe_list/recipe_list.dart';
+import 'views/account/account_Screen.dart';
+import 'views/recipe_list/recipe_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,7 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _widgetOptions = <Widget>[
     CreateRecipeScreen(),
-    RecipeList()
+    RecipeListScreen(),
+    AccountScreen()
   ];
 
   @override
@@ -31,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(Icons.add), label: 'Create Recipe'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.list_alt), label: 'Recipe List'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline_outlined), label: 'Account'),
           ],
         ),
       );

@@ -32,7 +32,7 @@ class RecipeInfo extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue),
+                        color: Colors.purple),
                     child: recipe.recipePhotoUrl.isNotEmpty
                         ? SizedBox(
                             height: 100,
@@ -57,8 +57,8 @@ class RecipeInfo extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(recipe.recipeName),
-                        Text(recipe.recipeDescription),
+                        Text(recipe.recipeName,style: Theme.of(context).textTheme.titleMedium),
+                        Text(recipe.recipeDescription,style: Theme.of(context).textTheme.titleSmall),
                       ],
                     ),
                   )
@@ -67,9 +67,37 @@ class RecipeInfo extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text('Ingredients'),
-              ListView.builder(
+              Text('Servings',style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(recipe.servings,style: Theme.of(context).textTheme.titleSmall),
+              const SizedBox(
+                height: 20,
+              ),
+              Text('Preparation time',style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(
+                height: 10,
+              ),
+              Text('${recipe.preparationTime}min',style: Theme.of(context).textTheme.titleSmall),
+              const SizedBox(
+                height: 20,
+              ),
+              Text('Cooking time',style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(
+                height: 10,
+              ),
+              Text('${recipe.cookingTime}min',style: Theme.of(context).textTheme.titleSmall),
+              const SizedBox(
+                height: 20,
+              ),
+              Text('Ingredients',style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(
+                height: 10,
+              ),
+              ListView.separated(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: recipe.ingredientList.length,
                 itemBuilder: (context, index) {
                   final ingredient = recipe.ingredientList[index];
@@ -77,15 +105,21 @@ class RecipeInfo extends StatelessWidget {
                     title: Text(ingredient.name),
                     subtitle: Text(ingredient.amount),
                   );
-                },
+                }, separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 20,);
+              },
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Text('Steps'),
-              ListView.builder(
+              Text('Steps',style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(
+                height: 10,
+              ),
+              ListView.separated(
                 shrinkWrap: true,
                 itemCount: recipe.stepList.length,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   final step = recipe.stepList[index];
                   return ListTile(
@@ -108,7 +142,9 @@ class RecipeInfo extends StatelessWidget {
                     title: Text(step.name),
                     subtitle: Text(step.instruction),
                   );
-                },
+                }, separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 20,);
+              },
               ),
             ],
           ),

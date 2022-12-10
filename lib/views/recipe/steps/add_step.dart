@@ -59,7 +59,7 @@ class _AddStepState extends State<AddStep> {
                           Navigator.of(context).pop();
                         });
                   },
-                  child : AppImageSelection(file: stepImage,),),
+                  child : Center(child: AppImageSelection(file: stepImage,)),),
                 const SizedBox(
                   height: 20,
                 ),
