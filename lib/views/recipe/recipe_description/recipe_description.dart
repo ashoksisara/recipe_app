@@ -43,19 +43,23 @@ class _RecipeDescriptionState extends State<RecipeDescription> {
                 },
               child: Consumer<RecipeProvider>(
                 builder: (context, provider, chile) {
-                  return AppImageSelection(
-                    file: provider.recipeImage,
+                  return Center(
+                    child: AppImageSelection(
+                      file: provider.recipeImage,
+                    ),
                   );
                 },
               ),
             ),
             const SizedBox(height: 20,),
-            const Text('Recipe Name'),
+            Text('Recipe Name',style: Theme.of(context).textTheme.titleMedium,),
+            const SizedBox(height: 10,),
             AppTextFormField(
                 controller: recipeProvider.recipeNameController,
                 hintText: 'Enter name'),
             const SizedBox(height: 20,),
-            const Text('Recipe description'),
+            Text('Recipe description',style: Theme.of(context).textTheme.titleMedium,),
+            const SizedBox(height: 10,),
             AppTextFormField(
                 controller: recipeProvider.recipeDescriptionController,
                 hintText: ''

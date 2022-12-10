@@ -10,7 +10,7 @@ class AppImagePlaceHolder extends StatelessWidget {
       width: 50,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+          color: Colors.purple, borderRadius: BorderRadius.circular(10)),
       child: const Text('No image',
           style: TextStyle(color: Colors.white, fontSize: 10),
           maxLines: 2,

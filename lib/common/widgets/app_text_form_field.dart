@@ -36,16 +36,6 @@ class AppTextFormField extends StatelessWidget {
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         border: InputBorder.none,
         hintText: hintText,
-        hintStyle: const TextStyle(
-          color: Colors.grey,
-          fontSize: 14,
-        ),
-        // enabledBorder: UnderlineInputBorder(
-        //   borderSide: BorderSide(color: color ?? Colors.white),
-        // ),
-        // focusedBorder: UnderlineInputBorder(
-        //   borderSide: BorderSide(color: color ?? Colors.white),
-        // ),
       ),
     );
   }

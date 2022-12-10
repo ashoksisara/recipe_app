@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/common/app/app_snack_bar.dart';
 import 'package:recipe_app/model/recipe_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -10,7 +11,7 @@ class FirebaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   static Future<UserCredential?> signUpUser(
-      String emailAddress, String password) async {
+      BuildContext context, String emailAddress, String password) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -21,27 +22,37 @@ class FirebaseService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         debugPrint('The password provided is too weak.');
+        AppSnackBar.showSnackBar(context, 'The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         debugPrint('The account already exists for that email.');
+        AppSnackBar.showSnackBar(context, 'The account already exists for that email.');
       }
     } catch (e) {
       debugPrint(e.toString());
+      AppSnackBar.showSnackBar(context, e.toString());
     }
     return null;
   }
 
   static Future<UserCredential?> signInUser(
-      String emailAddress, String password) async {
+      BuildContext context, String emailAddress, String password) async {
     try {
+      debugPrint('emailAddress $emailAddress');
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
+      debugPrint('No credential $credential');
       return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         debugPrint('No user found for that email.');
+        AppSnackBar.showSnackBar(context, 'No user found for that email.');
       } else if (e.code == 'wrong-password') {
         debugPrint('Wrong password provided for that user.');
+        AppSnackBar.showSnackBar(context, 'Wrong password provided for that user.');
       }
+    } catch (e) {
+      debugPrint(e.toString());
+      AppSnackBar.showSnackBar(context, e.toString());
     }
     return null;
   }

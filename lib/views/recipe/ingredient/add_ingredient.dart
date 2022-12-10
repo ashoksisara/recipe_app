@@ -29,28 +29,32 @@ class AddIngredient extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Ingredient'),
+              Text('Ingredient',style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(
+                height: 10,
+              ),
               AppTextFormField(
                   controller: ingredientController,
                   hintText: 'Enter ingredient, e.g. Carrot',
-                  validator: Validation.fieldEmptyValidation,
+                  validator: AppValidation.fieldEmptyValidation,
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Text('Amount'),
+              Text('Amount',style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(
+                height: 10,
+              ),
               AppTextFormField(
                   controller: amountController,
                   hintText: 'Enter amount, e.g. 25 gms',
-                validator: Validation.fieldEmptyValidation,
+                validator: AppValidation.fieldEmptyValidation,
               ),
               const SizedBox(
                 height: 40,
               ),
               AppElevatedButton(
                 text: 'Save',
-                textColor: Colors.white,
-                buttonColor: Colors.blue,
                 onPressed: () {
                   if(ingredientFormKey.currentState!.validate()){
                     IngredientModel ingredient = IngredientModel(

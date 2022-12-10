@@ -19,9 +19,9 @@ class _CookingTimeState extends State<CookingTime> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Cooking Time(in minutes)'),
-        const Text('How much time does it take to cook this dish?'),
-        const SizedBox(height: 20,),
+        Text('Cooking Time (in minutes)',style: Theme.of(context).textTheme.titleMedium),
+        Text('How much time does it take to cook this dish?',style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(height: 10,),
         AppTextFormField(
             controller: recipeProvider.cookingTimeController,
             hintText: 'Enter minutes',

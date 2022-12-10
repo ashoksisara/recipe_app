@@ -83,6 +83,33 @@ class RecipeInfo extends StatelessWidget {
                 height: 20,
               ),
               const Text('Steps'),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: recipe.stepList.length,
+                itemBuilder: (context, index) {
+                  final step = recipe.stepList[index];
+                  return ListTile(
+                    leading: step.imageUrl !=null && step.imageUrl!.isNotEmpty
+                        ? SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          step.imageUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const AppImagePlaceHolder();
+                          },
+                        ),
+                      ),
+                    )
+                        : const AppImagePlaceHolder(),
+                    title: Text(step.name),
+                    subtitle: Text(step.instruction),
+                  );
+                },
+              ),
             ],
           ),
         ),

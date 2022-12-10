@@ -19,9 +19,9 @@ class _ServingsState extends State<Servings> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Servings'),
-        const Text('How many adults will this serve?'),
-        const SizedBox(height: 20,),
+        Text('Servings',style: Theme.of(context).textTheme.titleMedium),
+        Text('How many adults will this serve?', style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(height: 10,),
         AppTextFormField(
             controller: recipeProvider.servingController,
             hintText: 'Enter servings',

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_app/common/app/app_snackbar.dart';
+import 'package:recipe_app/common/app/app_snack_bar.dart';
 import 'package:recipe_app/model/recipe_model.dart';
 import 'package:recipe_app/providers/home_provider.dart';
 import 'package:recipe_app/services/firebase_service/firebase_service.dart';
@@ -50,6 +50,11 @@ class RecipeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setStepImage(StepModel step, XFile? file){
+    step.image = file;
+    notifyListeners();
+  }
+
   Future<void> onSaveRecipe(BuildContext context) async {
     if (recipeNameController.text.isEmpty) {
       AppSnackBar.showSnackBar(
@@ -82,6 +87,15 @@ class RecipeProvider extends ChangeNotifier {
           recipe.recipePhotoUrl = url;
         }
       }
+      if(stepList.isNotEmpty){
+        for(int i=0; i<stepList.length; i++){
+          if(stepList[i].image != null){
+            String? url = await FirebaseService.uploadImage(
+                File(stepList[i].image!.path), (stepList[i].image!.name));
+            stepList[i].imageUrl = url;
+          }
+        }
+      }
       debugPrint('recipe tojson -> ${recipe.toJson()}');
       debugPrint('recipe ingre -> ${recipe.ingredientList}');
       FirebaseService.addRecipe(recipe).then((value) {
@@ -97,6 +111,7 @@ class RecipeProvider extends ChangeNotifier {
 
   Future<void> getRecipeList() async{
     isLoading = true;
+    notifyListeners();
    List<RecipeModel> recipeList =  await FirebaseService.getRecipes();
    debugPrint('recipeList firebase-> ${recipeList.length}');
    this.recipeList = recipeList;

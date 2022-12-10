@@ -1,7 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_app/common/app/validation.dart';
+import 'package:recipe_app/providers/authentication_provider.dart';
 
 import '../../common/widgets/app_elevated_button.dart';
+import '../../common/widgets/app_loader.dart';
 import '../../common/widgets/app_text_form_field.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -13,85 +16,68 @@ class SignInScreen extends StatefulWidget {
 
 class SignInScreenState extends State<SignInScreen> {
   final signInFormKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Form(
-            key: signInFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 40),
-                const Text(
-                  'Sign In',
-                  style: TextStyle(fontSize: 24),
-                ),
-                const SizedBox(height: 20),
-                AppTextFormField(
-                  controller: emailController,
-                  hintText: 'email',
-                  validator: (value) {},
-                ),
-                const SizedBox(height: 20),
-                AppTextFormField(
-                  controller: passwordController,
-                  hintText: 'password',
-                  obscureText: true,
-                  validator: (value) {},
-                ),
-                const SizedBox(height: 40),
-                AppElevatedButton(
-                  text: 'SIGN IN',
-                  textColor: Colors.white,
-                  buttonColor: Colors.blue,
-                  onPressed: () {},
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'Not a user yet? ',
-                          style: TextStyle(fontSize: 15, color: Colors.black),
-                        ),
-                        TextSpan(
-                          text: 'Sign Up',
-                          recognizer: TapGestureRecognizer()..onTap = () {},
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+    final authProvider = context.read<AuthenticationProvider>();
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Recipe App'),
+        elevation: 0,
+      ),
+      body: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Form(
+              key: signInFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    'Sign In',
+                    style: Theme.of(context).textTheme.headline3,
                   ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                    child: Text(
-                      '',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                      ),
-                    ),
+                  const SizedBox(height: 20),
+                  AppTextFormField(
+                    controller: authProvider.emailController,
+                    hintText: 'Enter email',
+                    validator: AppValidation.emailValidation,
+                    keyboardType: TextInputType.emailAddress,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  AppTextFormField(
+                    controller: authProvider.passwordController,
+                    hintText: 'Enter password',
+                    obscureText: true,
+                    validator: AppValidation.passwordValidation,
+                  ),
+                  const SizedBox(height: 40),
+                  AppElevatedButton(
+                    text: 'SIGN IN',
+                    onPressed: () {
+                      debugPrint('sign in');
+                      FocusScope.of(context).unfocus();
+                      if(signInFormKey.currentState!.validate()){
+                        context.read<AuthenticationProvider>().signInUser(context);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+          Consumer<AuthenticationProvider>(
+            builder: (context, provider, child) {
+              if (provider.isLoading) {
+                return const AppLoader();
+              }
+              return const SizedBox();
+            },
+          ),
+        ],
       ),
     );
   }

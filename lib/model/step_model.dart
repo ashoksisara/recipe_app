@@ -1,20 +1,27 @@
+import 'package:image_picker/image_picker.dart';
+
 class StepModel {
   String name;
   String instruction;
-  String photo;
+  XFile? image;
+  String? imageUrl;
 
   StepModel(
-      {required this.name, required this.instruction, required this.photo});
+      {required this.name,
+      required this.instruction,
+      required this.image,
+      required this.imageUrl});
 
   factory StepModel.fromJson(Map<String, dynamic> json) => StepModel(
         name: json["name"],
         instruction: json["instruction"],
-        photo: json["photo"],
+        image: json["image"],
+        imageUrl: json["imageUrl"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "instruction": instruction,
-        "photo": photo,
+        "imageUrl": imageUrl,
       };
 }

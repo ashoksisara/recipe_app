@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:recipe_app/common/widgets/app_loader.dart';
 
 import '../../common/widgets/app_image_placeholder.dart';
 import '../../providers/recipe_provider.dart';
@@ -13,11 +14,14 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
-
   @override
   void initState() {
-    final recipeProvider = Provider.of<RecipeProvider>(context,listen: false);
-    recipeProvider.getRecipeList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final recipeProvider =
+          Provider.of<RecipeProvider>(context, listen: false);
+      recipeProvider.getRecipeList();
+    });
+
     super.initState();
   }
 
@@ -29,9 +33,12 @@ class _RecipeListState extends State<RecipeList> {
         title: const Text('Recipe List'),
       ),
       body: Consumer<RecipeProvider>(builder: (context, provider, _) {
-        if (provider.recipeList.isNotEmpty) {
+        if (provider.isLoading) {
+          return const AppLoader();
+        } else if (provider.recipeList.isNotEmpty) {
           return ListView.separated(
             shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
             itemCount: provider.recipeList.length,
             itemBuilder: (context, index) {
               final recipe = provider.recipeList[index];
@@ -67,16 +74,12 @@ class _RecipeListState extends State<RecipeList> {
               );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return const Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.grey,
-              );
+              return const SizedBox(height: 20,);
             },
           );
         } else {
           return const Center(
-            child: Text("You haven't created any recipe yet"),
+            child: Text("No recipe found!"),
           );
         }
       }),
