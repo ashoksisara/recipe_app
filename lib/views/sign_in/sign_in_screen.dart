@@ -56,7 +56,7 @@ class SignInScreenState extends State<SignInScreen> {
                   ),
                   const SizedBox(height: 40),
                   AppElevatedButton(
-                    text: 'SIGN IN',
+                    text: 'Sign In',
                     onPressed: () {
                       FocusScope.of(context).unfocus();
                       if(signInFormKey.currentState!.validate()){

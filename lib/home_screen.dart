@@ -4,7 +4,7 @@ import 'package:recipe_app/providers/home_provider.dart';
 import 'package:recipe_app/views/recipe/create_recipe_screen.dart';
 
 import 'providers/recipe_provider.dart';
-import 'views/account/account_Screen.dart';
+import 'views/account/account_screen.dart';
 import 'views/recipe_list/recipe_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    //check any recipe is added while internet is off
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final recipeProvider =
       Provider.of<RecipeProvider>(context, listen: false);

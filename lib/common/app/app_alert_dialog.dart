@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppAlertDialog {
+  //common app alert dialog
   static void showAlertDialog(BuildContext context,
       {required String alertMessage,
       required String button1Text,

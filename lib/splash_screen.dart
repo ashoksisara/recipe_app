@@ -16,6 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    //check user login status and navigate according
     Timer(const Duration(seconds: 2), () {
       bool isLoggedIn = FirebaseAuth.instance.currentUser != null ? true : false;
       debugPrint('isLoggedIn : $isLoggedIn');
@@ -43,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
         color: Colors.purple,
         child: const Center(
           child: Text(
-            'RECIPE APP',
+            'Recipe App',
             style: TextStyle(color: Colors.white, fontSize: 30),
           ),
         ),

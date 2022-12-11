@@ -70,7 +70,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 40),
                     AppElevatedButton(
-                      text: 'SIGN UP',
+                      text: 'Sign up',
                       onPressed: () async {
                         FocusScope.of(context).unfocus();
                         if (signUpFormKey.currentState!.validate()) {

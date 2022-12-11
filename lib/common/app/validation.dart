@@ -1,4 +1,6 @@
 class AppValidation {
+
+  //check whether field is empty or not
   static String? fieldEmptyValidation(value) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter value';
@@ -7,6 +9,7 @@ class AppValidation {
     }
   }
 
+  //check whether email field is empty and valid
   static String? emailValidation(value) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter your email address';
@@ -17,6 +20,7 @@ class AppValidation {
     return null;
   }
 
+  //check whether password field is empty or not
   static String? passwordValidation(value) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter your password';
@@ -27,6 +31,7 @@ class AppValidation {
     return null;
   }
 
+  //check whether confirm password field is empty or not
   static String? confirmPasswordValidation(value, value2) {
     if (value == null || value.trim().isEmpty) {
       return 'Please enter your password';

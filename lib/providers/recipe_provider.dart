@@ -61,11 +61,13 @@ class RecipeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // update ingredient reorder button status
   void updateIngredientReorder(){
     reorderIngredient = !reorderIngredient;
     notifyListeners();
   }
 
+  //reorder ingredients
   void reorderIngredientData(oldIndex, newIndex){
       if (oldIndex < newIndex){
         newIndex--;
@@ -75,11 +77,13 @@ class RecipeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // update step reorder button status
   void updateStepReorder(){
     reorderStep = !reorderStep;
     notifyListeners();
   }
 
+  // reorder steps
   void reorderStepListData(oldIndex, newIndex){
     if (oldIndex < newIndex){
       newIndex--;
@@ -89,7 +93,7 @@ class RecipeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
+  //check for validation and upload to firestore or store to shared preference
   Future<void> onSaveRecipe(BuildContext context) async {
     if (recipeNameController.text.isEmpty) {
       AppSnackBar.showSnackBar(
@@ -147,6 +151,7 @@ class RecipeProvider extends ChangeNotifier {
   }
   }
 
+  //upload recipe to cloud firestore
   Future<void> uploadRecipeToDatabase(BuildContext context, RecipeModel recipe) async {
     if (recipeImage != null) {
       String? url = await FirebaseService.uploadImage(
@@ -170,6 +175,7 @@ class RecipeProvider extends ChangeNotifier {
     });
   }
 
+  //get recipe list from cloud firestore if online otherwise from shared preference
   Future<void> getRecipeList() async{
     isLoading = true;
     notifyListeners();
@@ -193,6 +199,7 @@ class RecipeProvider extends ChangeNotifier {
    notifyListeners();
   }
 
+  //check recipes are stored and if yes then ask for sync
   Future<void> checkStoreRecipe(BuildContext context) async {
     bool isOnline = await AppConnection.checkConnectivityState();
     if(isOnline){
@@ -215,6 +222,7 @@ class RecipeProvider extends ChangeNotifier {
     }
   }
 
+  //Sync recipe data to cloud firestore
   Future<void> syncRecipeData(context, String recipeData) async{
     debugPrint('recipeData : $recipeData');
     List recipeListMap = jsonDecode(recipeData);
@@ -225,6 +233,7 @@ class RecipeProvider extends ChangeNotifier {
     }
   }
 
+  //Navigate to recipe list after recipe addition
   void navigateToRecipeList(BuildContext context){
     final homeProvider = Provider.of<HomeProvider>(context, listen: false);
     homeProvider.onBottomItemChange(1);
@@ -232,6 +241,7 @@ class RecipeProvider extends ChangeNotifier {
     clearValues();
   }
 
+  //clear values of all controllers and variables
   void clearValues(){
     recipeNameController.clear();
     recipeDescriptionController.clear();

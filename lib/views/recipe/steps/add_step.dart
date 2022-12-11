@@ -46,40 +46,50 @@ class _AddStepState extends State<AddStep> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     FocusScope.of(context).unfocus();
                     AppBottomSheet.showImageSelectionSheet(context,
                         onCamera: (file) {
-                          setState((){stepImage = file;});
-                          Navigator.of(context).pop();
-                        }, onGallery: (file) {
-                          setState((){stepImage = file;});
-                          Navigator.of(context).pop();
-                        });
+                      setState(() {
+                        stepImage = file;
+                      });
+                      Navigator.of(context).pop();
+                    }, onGallery: (file) {
+                      setState(() {
+                        stepImage = file;
+                      });
+                      Navigator.of(context).pop();
+                    });
                   },
-                  child : Center(child: AppImageSelection(file: stepImage,)),),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text('Step name',style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(
-                  height: 10,
-                ),
-                AppTextFormField(
-                    controller: stepNameController,
-                    hintText: 'Enter step name',
-                    validator: AppValidation.fieldEmptyValidation,
+                  child: Center(
+                      child: AppImageSelection(
+                    file: stepImage,
+                  )),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Text('Instruction',style: Theme.of(context).textTheme.titleMedium),
+                Text('Step name',
+                    style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(
                   height: 10,
                 ),
                 AppTextFormField(
-                    controller: instructionController,
-                    hintText: 'Write instruction for this step',
+                  controller: stepNameController,
+                  hintText: 'Enter step name',
+                  validator: AppValidation.fieldEmptyValidation,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('Instruction',
+                    style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(
+                  height: 10,
+                ),
+                AppTextFormField(
+                  controller: instructionController,
+                  hintText: 'Write instruction for this step',
                   validator: AppValidation.fieldEmptyValidation,
                 ),
                 const SizedBox(
@@ -88,13 +98,12 @@ class _AddStepState extends State<AddStep> {
                 AppElevatedButton(
                   text: 'Save',
                   onPressed: () {
-                    if(stepFormKey.currentState!.validate()){
+                    if (stepFormKey.currentState!.validate()) {
                       StepModel step = StepModel(
                           instruction: instructionController.text,
                           name: stepNameController.text,
                           image: stepImage,
-                          imageUrl: ''
-                      );
+                          imageUrl: '');
                       context.read<RecipeProvider>().addStep(step);
                       Navigator.of(context).pop();
                     }

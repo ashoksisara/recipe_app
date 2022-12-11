@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_app/common/widgets/app_loader.dart';
 
 import '../../common/widgets/app_image_placeholder.dart';
 import '../../providers/recipe_provider.dart';
@@ -16,6 +15,8 @@ class RecipeListScreen extends StatefulWidget {
 class _RecipeListScreenState extends State<RecipeListScreen> {
   @override
   void initState() {
+    //get recipe list from cloud firestore if user is online
+    // otherwise from shared preference
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final recipeProvider =
           Provider.of<RecipeProvider>(context, listen: false);

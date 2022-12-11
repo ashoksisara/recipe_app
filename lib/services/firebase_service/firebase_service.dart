@@ -71,7 +71,7 @@ class FirebaseService {
       String url = downloadUrl.toString();
       return url;
     }catch(e){
-      print('error while uploading file $e');
+      debugPrint('error while uploading file $e');
       return null;
     }
   }
@@ -82,7 +82,7 @@ class FirebaseService {
           FirebaseFirestore.instance.collection('recipes');
       await recipes.add(recipeModel.toJson());
     } catch (e) {
-      print('failed to add recipe $e');
+      debugPrint('failed to add recipe $e');
     }
   }
 
@@ -94,13 +94,13 @@ class FirebaseService {
       QuerySnapshot querySnapshot = await recipes.get();
       for (var element in querySnapshot.docs) {
         final Map<String, dynamic> map = element.data() as Map<String, dynamic>;
-        print('map -> $map');
+        debugPrint('map -> $map');
         RecipeModel recipe = RecipeModel.fromJson(map);
         recipeList.add(recipe);
-        print('recipeList length -> ${recipeList.length}');
+        debugPrint('recipeList length -> ${recipeList.length}');
       }
     }catch(e){
-      print('failed to get recipes $e');
+      debugPrint('failed to get recipes $e');
     }
     return recipeList;
   }
