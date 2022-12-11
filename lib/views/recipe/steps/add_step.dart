@@ -50,11 +50,9 @@ class _AddStepState extends State<AddStep> {
                     FocusScope.of(context).unfocus();
                     AppBottomSheet.showImageSelectionSheet(context,
                         onCamera: (file) {
-                          debugPrint('file ---> ${file?.name}');
                           setState((){stepImage = file;});
                           Navigator.of(context).pop();
                         }, onGallery: (file) {
-                          debugPrint('file ---> ${file?.name}');
                           setState((){stepImage = file;});
                           Navigator.of(context).pop();
                         });

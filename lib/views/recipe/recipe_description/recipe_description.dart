@@ -32,11 +32,9 @@ class _RecipeDescriptionState extends State<RecipeDescription> {
                   FocusScope.of(context).unfocus();
                   AppBottomSheet.showImageSelectionSheet(context,
                       onCamera: (file) {
-                        debugPrint('file ---> ${file?.name}');
                         recipeProvider.setRecipeImage(file);
                         Navigator.of(context).pop();
                       }, onGallery: (file) {
-                        debugPrint('file ---> ${file?.name}');
                         recipeProvider.setRecipeImage(file);
                         Navigator.of(context).pop();
                       });

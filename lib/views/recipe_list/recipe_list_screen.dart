@@ -40,9 +40,8 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
             itemCount: provider.recipeList.length,
             itemBuilder: (context, index) {
               final recipe = provider.recipeList[index];
-              debugPrint('recipe');
-              debugPrint('${recipe.ingredientList}');
               return InkWell(
+                borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => RecipeInfo(recipe: recipe),

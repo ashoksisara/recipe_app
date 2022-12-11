@@ -58,7 +58,6 @@ class SignInScreenState extends State<SignInScreen> {
                   AppElevatedButton(
                     text: 'SIGN IN',
                     onPressed: () {
-                      debugPrint('sign in');
                       FocusScope.of(context).unfocus();
                       if(signInFormKey.currentState!.validate()){
                         context.read<AuthenticationProvider>().signInUser(context);

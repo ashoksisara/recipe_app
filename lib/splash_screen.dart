@@ -26,9 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
           (route) => false,
         );
       } else {
-        Navigator.of(context).push(
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) => const SignUpScreen()),
+              (route) => false,
         );
       }
     });

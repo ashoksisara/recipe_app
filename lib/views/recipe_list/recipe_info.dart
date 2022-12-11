@@ -10,7 +10,6 @@ class RecipeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('recipe -> ${recipe.ingredientList.length}');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipe Info'),

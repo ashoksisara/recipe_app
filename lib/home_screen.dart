@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_app/providers/home_provider.dart';
 import 'package:recipe_app/views/recipe/create_recipe_screen.dart';
 
+import 'providers/recipe_provider.dart';
 import 'views/account/account_Screen.dart';
 import 'views/recipe_list/recipe_list_screen.dart';
 
@@ -19,6 +20,16 @@ class _HomeScreenState extends State<HomeScreen> {
     RecipeListScreen(),
     AccountScreen()
   ];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final recipeProvider =
+      Provider.of<RecipeProvider>(context, listen: false);
+      recipeProvider.checkStoreRecipe(context);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
